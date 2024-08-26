@@ -17,24 +17,24 @@ const app = express();
 
 const port = process.env.PORT;
 
-//using middlewares
+// Using middlewares
 app.use(express.json());
 app.use(cookieParser());
 
-// importing routes
+// Importing routes
 import userRoutes from "./routes/userRoutes.js";
 import pinRoutes from "./routes/pinRoutes.js";
 
-// using routes
+// Using routes
 app.use("/api/user", userRoutes);
 app.use("/api/pin", pinRoutes);
 
-const __dirname = path.resolve();
+// Serving static files from the root directory
+app.use(express.static(path.join(__dirname, "public")));
 
-app.use(express.static(path.join(__dirname, "/frontend/dist")));
-
+// For single-page applications (SPA) fallback
 app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "frontend", "dist", "index.html"));
+  res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
 app.listen(port, () => {
