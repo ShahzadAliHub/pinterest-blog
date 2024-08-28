@@ -1,9 +1,10 @@
 import express from "express";
+import path from "path";
+import { fileURLToPath } from "url";
 import dotenv from "dotenv";
 import connectDb from "./database/db.js";
 import cookieParser from "cookie-parser";
 import cloudinary from "cloudinary";
-import path from "path";
 
 dotenv.config();
 
@@ -14,6 +15,10 @@ cloudinary.v2.config({
 });
 
 const app = express();
+
+// Use import.meta.url to get the directory name
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const port = process.env.PORT;
 
